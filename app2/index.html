@@ -1,50 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>學生資料管理系統</title>
-    <link rel="shortcut icon" href="#" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
-    <!---匯入要使用的函式庫--->
 
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>學生資料管理系統</title>
+  <link rel="shortcut icon" href="#" type="image/x-icon">
+  <link rel="stylesheet" href="../plugin/css/bootstrap.css">
+  <link rel="stylesheet" href="style.css">
+  <!---匯入要使用的函式庫--->
+  <script src="./jquery.js"></script>
 
 </head>
+
 <body>
   <h1 class="header">學生資料管理系統</h1>
+  <div class="container d-flex">
+    <div class="sex">
 
-  
+      <button class="btn btn-success bg-opacity-10" onclick="query('sex',1)">男生</button>
+      <button class="btn btn-info bg-opacity-10" onclick="query('sex',2)">女生</button>
+    </div>
+    <div class="classes">
+
+      <button class="btn btn-warning bg-opacity-10" onclick="query('class',101)">一年一班</button>
+      <button class="btn btn-warning bg-opacity-10" onclick="query('class',102)">一年二班</button>
+    </div>
+
+  </div>
+  <div class="users  d-flex flex-wrap mx-auto my-3" style="width:64%"></div>
 </body>
+
 </html>
 <script>
-/************************************
-* 1.考慮觸發行為的事件
-* 2.建立監聽行為
-* 3.考慮是否需要代入參數
-* 4.是否會有回傳值？回傳值的功用及處理？
-* 5.是否需要更新畫面內容？更新畫面的方法？
-************************************/
+  /************************************
+   * 1.考慮觸發行為的事件
+   * 2.建立監聽行為
+   * 3.考慮是否需要代入參數
+   * 4.是否會有回傳值？回傳值的功用及處理？
+   * 5.是否需要更新畫面內容？更新畫面的方法？
+   ************************************/
+  queryAll();
 
 
-//新增資料的函式
-function create(){
+  //新增資料的函式
+  function create() {
 
-}
+  }
 
-//查詢資料的函式
-function query(){
+  //查詢資料的函式
+  function query(type, value) {
+    $.get(`./api/query.php?do=${type}`, { value }, (res) => {
+      render(res);
+    })
+  }
+  function queryAll() {
+    $.get("./api/query.php?do=all", (rows) => {
+      // $.getJSON("./api/query.php?do=all", (rows) => { // 轉乘 JSON 格式
+      // rows = JSON.parse(rows); // 轉成 JSON 格式
+      render(rows);
 
-}
+      // console.log(rows)
+    })
+  }
 
-//編輯資料的函式
-function update(){
+  // 將重複的程式碼重構
+  function render(datas) {
+    $(".user").html("");
+    let data_layout;
 
-}
 
-//刪除資料的函式
-function del(){
+    rows.forEach((data, idx) => {
+      data_layout =
+        `<div class="p-2">
+<div class="card" style="width: 18rem;">
+<div class="name text-center bolder text-lg">${data.name}</div>
+<div class="card-body">
+<h5 class="card-title">${data.school_num}</h5>
+<div class="card-text">${data.birthday}</div>
+<div class="card-text">${data.uni_id}</div>
+<div class='controls'>
+<a href="#" class="btn btn-primary">編輯</a>
+<a href="#" class="btn btn-danger">刪除</a>
+</div>
+</div>
+</div>
+</div>`;
 
-}
+
+      $(".users").append(data_layout);
+    });
+  }
+
+  //編輯資料的函式
+  function update() {
+
+  }
+
+  //刪除資料的函式
+  function del() {
+
+  }
 
 </script>
