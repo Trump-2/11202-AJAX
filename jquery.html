@@ -61,6 +61,21 @@
 
 
   //利用$.get()方法傳送請求並取得回應
+  $.get('https://kktix.com/events.json', (data) => {
+    let events = data.entry;// 存取回傳物件的 entry 屬性
 
+    events.forEach((event, i) => {
+      $("ul").append(`<li class="list-group-item list-group-item-action">
+                                <div>${event.title}</div>
+                                <div>${event.summary}</div>
+                                <div>${event.content}</div>
+                            </li>`);
+    })
+
+    $(".title").text(data.title);
+    $(".updated").text(data.updated);
+
+
+  });
 
 </script>
