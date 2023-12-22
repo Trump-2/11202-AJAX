@@ -283,4 +283,12 @@ function dd($array)
   echo "</pre>";
 }
 
+function to($url)
+{
+  header("location:$url");
+}
+
 $Student = new DB('students');
+
+$Class = new DB('classes');
+$ClassStudent = new DB('class_student');
