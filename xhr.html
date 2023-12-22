@@ -52,11 +52,15 @@
         // document.write(response)
         // console.log(response)
 
-        let events = response.entry;
-        // console.log(events); // 存取回傳物件的 entry 屬性
+        let events = response.entry;// 存取回傳物件的 entry 屬性
+        // console.log(events); 
 
         events.forEach((event, i) => {
-            $("ul").append("<li>" + event.title + "</li>");
+            $("ul").append(`<li class="list-group-item list-group-item-action">
+                                <div>${event.title}</div>
+                                <div>${event.summary}</div>
+                                <div>${event.content}</div>
+                            </li>`);
         })
 
         $(".title").text(response.title);
