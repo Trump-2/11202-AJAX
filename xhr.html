@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>XMLHttpRequest</title>
     <link rel="shortcut icon" href="#" type="image/x-icon">
+    <!-- 載入 bs5 -->
+    <link rel="stylesheet" href="./plugin/css/bootstrap.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <h1 class="header">XMLHttpRequest</h1>
-    <div class="title"></div>
-    <h4></h4>
-    <ul></ul>
+    <h4 class="title"></h4>
+    <div class="updated"></div>
+    <ul class="list-group"></ul>
 
+    <!-- 載入 bs5 -->
+    <script src="./plugin/js/jquery.js"></script>
+    <script src="./plugin/js/bootstrap.js"></script>
 </body>
+
 </html>
 <script>
     /********************************************************
@@ -26,14 +34,36 @@
     ********************************************************/
 
     //宣告一個XMLHttpRequest物件
-
+    let xhr = new XMLHttpRequest
 
     //建立請求的各項設定及實質內容
-
-
+    xhr.open(
+        'GET', //get,post,put,patch,delete
+        'https://kktix.com/events.json');
+    xhr.responseType = 'json'; // 將回傳結果指定為 JSON 格式
     //建立得到回應時的各項設定及行為
+    xhr.onload = function () {
+        let type = xhr.getResponseHeader("Content-Type");
+        let status = xhr.status
+        // let response = xhr.responseText // 將回傳結果指定為文字
 
+        let response = xhr.response;
+        // let res = JSON.parse(response); // .parse() : 將文字轉換成 JSON 格式物件
+        // document.write(response)
+        // console.log(response)
+
+        let events = response.entry;
+        // console.log(events); // 存取回傳物件的 entry 屬性
+
+        events.forEach((event, i) => {
+            $("ul").append("<li>" + event.title + "</li>");
+        })
+
+        $(".title").text(response.title);
+        $(".updated").text(response.updated)
+
+    }
 
     //送出請求
-
-    </script>
+    xhr.send()
+</script>
