@@ -11,71 +11,28 @@
   <link rel="stylesheet" href="style.css">
   <!---匯入要使用的函式庫--->
   <script src="jquery.js"></script>
-
 </head>
 
 <body>
-
-
-
-
-  <h1 class="header">學生資料管理系統 <button class="btn btn-primary ms-3" onclick="popForm('add')">+新增</button>
-  </h1>
+  <h1 class="header">學生資料管理系統</h1>
   <div class="container d-flex">
     <div class="sex mx-2 my-3">
+      <button class="btn btn-primary" onclick="query('sex',1)">男生</button>
+      <button class="btn btn-warning" onclick="query('sex',2)">女生</button>
       <button class="btn btn-primary mx-2 my-2" onclick="query('sex',1)">男生</button>
       <button class="btn btn-warning mx-2 my-2" onclick="query('sex',2)">女生</button>
     </div>
-    <div class="classes mx-2 my-3">
+    <div class="clases mx-2 my-3">
+      <button class="btn btn-info" onclick="query('class',101)">一年一班</button>
+      <button class="btn btn-info" onclick="query('class',102)">二年一班</button>
+      <div class="classes mx-2 my-3">
+      </div>
     </div>
-  </div>
-  <div class="users d-flex flex-wrap mx-auto my-3" style="width:64%"></div>
-
-  <!-- Modal -->
-  <div class="modals">
-  </div>
-
-  <script src="../plugin/js/bootstrap.js"></script>
+    <div class="users d-flex flex-wrap mx-auto my-3" style="width:64%"></div>
 </body>
 
 </html>
 <script>
-  // 問 chatGPT 這行的意思；
-  //這行是 bootstrap 提供的 js，因為 bootstrap5 不再支援 jQuery
-  // const stuModal = new bootstrap.Modal('#studentForm', {
-  //   keyboard: false
-  // })
-
-  // .on() 在jQuery 中就等於是 addEventListner()
-  // 'show.bs.modal' 是 bootstrap 的 modal 事件 (有多個，這只是其中之一)
-  // $("#studentForm").on('show.bs.modal', () => {
-  //   $.get("./api/get_schools.php", (options) => { // callback function
-  //     $("#schools").html(options);
-  //   });
-  // })
-
-  let stuModal;
-  function popForm(type, id = null) {
-    $.get('./api/user_form.php', (form) => {
-
-      //  
-      $("#modals").html(form);
-      stuModal = new bootstrap.Modal('#studentForm', {
-        keyboard: false
-      })
-
-      // 註冊modal 的顯示事件
-      $("#studentForm").on('show.bs.modal', () => {
-        $.get("./api/get_schools.php", (options) => { // callback function
-          $("#schools").html(options);
-        });
-      })
-
-      // 觸發顯示
-      stuModal.show("studentForm")
-    })
-  }
-
   /************************************
   * 1.考慮觸發行為的事件
   * 2.建立監聽行為
@@ -83,15 +40,13 @@
   * 4.是否會有回傳值？回傳值的功用及處理？
   * 5.是否需要更新畫面內容？更新畫面的方法？
   ************************************/
-
-
   queryAll();
+
   queryClasses();
   //新增資料的函式
   function create() {
 
   }
-
   //查詢資料的函式
   function query(type, value) {
     $.get(`./api/query.php?do=${type}`, { value }, (res) => {
@@ -118,7 +73,6 @@
       render(users)
     })
   }
-
   function render(datas) {
     $(".users").html("")
     let data_layout;
@@ -132,7 +86,7 @@
     <div class="card-text">${data.uni_id}</div>
     <div class='controls'>
       <a href="#" class="btn btn-primary">編輯</a>
-      <a href="Javascript:del(${data.id})" class="btn btn-danger">刪除</a>
+      <a href="#" class="btn btn-danger">刪除</a>
     </div>
   </div>
 </div></div>`
@@ -140,21 +94,16 @@
       $(".users").append(data_layout)
     })
   }
-
   //編輯資料的函式
   function update() {
-
   }
-
   //刪除資料的函式
   function del(id) {
-    let con = confirm("確定要刪除嗎?")
+    let con = confirm("確定要刪除資料嗎?")
     if (con) {
       $.post('./api/delete.php', { id }, (res) => {
         $(`#user${id}`).remove()
-        //queryAll()
       })
     }
   }
-
 </script>
