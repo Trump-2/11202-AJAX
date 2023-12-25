@@ -22,11 +22,15 @@
   <h1 class="header">學生資料管理系統 <button class="btn btn-primary ms-3" onclick="popForm('add')">+新增</button>
   </h1>
   <div class="container d-flex">
-    <div class="sex mx-2 my-3">
+    <div class="all mx-2 my-3 col-1">
+      <button class="btn btn-success mx-2 my-2" onclick="queryAll()">全部</button>
+    </div>
+    <div class="sex mx-2 my-3 col-2">
       <button class="btn btn-primary mx-2 my-2" onclick="query('sex',1)">男生</button>
       <button class="btn btn-warning mx-2 my-2" onclick="query('sex',2)">女生</button>
     </div>
-    <div class="classes mx-2 my-3">
+
+    <div class="classes mx-2 my-3  col-9">
     </div>
   </div>
   <div class="users d-flex flex-wrap mx-auto my-3" style="width:64%"></div>
@@ -116,8 +120,8 @@
   ************************************/
 
 
-  queryAll();
   queryClasses();
+  queryAll();
   //新增資料的函式
   function create() {
 
@@ -128,6 +132,14 @@
     $.get(`./api/query.php?do=${type}`, { value }, (res) => {
       // console.log(res)
       render(res)
+
+      if (type == 'class') {
+        $(".class-btn.btn.btn-success").addClass('btn-info')
+        $(".class-btn.btn.btn-success").removeClass('btn-success')
+        $("#b" + value).addClass('btn-success');
+        $("#b" + value).removeClass('btn-info');
+
+      }
     })
   }
   function queryClasses() {
@@ -135,7 +147,7 @@
       //console.log(classes)
       let class_btns;
       classes.forEach((c, idx) => {
-        class_btns = `<button class='btn btn-info m-2' onclick="query('class',${c.code})">
+        class_btns = `<button id="b${c.code}" class='class-btn btn btn-info m-2' onclick="query('class',${c.code})">
                   ${c.name}
                   </button>`
 
