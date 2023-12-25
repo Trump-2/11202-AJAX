@@ -11,7 +11,16 @@
   <link rel="stylesheet" href="style.css">
   <!---匯入要使用的函式庫--->
   <script src="jquery.js"></script>
-
+  <style>
+    #relation {
+      border: 1px solid #ccc;
+      width: 93.5%;
+      position: relative;
+      left: 74px;
+      top: -1px;
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -32,6 +41,11 @@
 
     <div class="classes mx-2 my-3  col-9">
     </div>
+  </div>
+  <div class="input-group mb-3 container">
+    <span class="input-group-text" id="basic-addon1">search</span>
+    <input id="search-input" type="text" class="form-control">
+    <div id="relation"></div>
   </div>
   <div class="users d-flex flex-wrap mx-auto my-3" style="width:64%"></div>
 
@@ -57,6 +71,16 @@
   //     $("#schools").html(options);
   //   });
   // })
+
+
+  let input
+  $("#search-input").on('input', () => {
+    input = $("#search-input").val()
+    $.get("./api/search.php", { input }, (result) => {
+      $("#relation").html(result)
+      $("#relation").show()
+    })
+  })
 
   // popForm() 這段要重聽
   let stuModal;
@@ -121,7 +145,7 @@
 
 
   queryClasses();
-  queryAll();
+  queryAll('class', '101');
   //新增資料的函式
   function create() {
 
