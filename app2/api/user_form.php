@@ -1,8 +1,11 @@
+<!-- Modal -->
 <div class="modal fade" id="studentForm" tabindex="-1" aria-labelledby="studentFormLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="studentFormLabel"><?= (isset($_GET['id'])) ? '編輯學生' : '新增學生' ?></h1>
+        <h1 class="modal-title fs-5" id="studentFormLabel">
+          <?= (isset($_GET['id'])) ? '編輯學生' : '新增學生'; ?>
+        </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -16,11 +19,11 @@
           ?>
           <div class="mb-3 col-6">
             <label for="name" class="form-label">姓名</label>
-            <input type="text" class="form-control" name="name" id="name" value=<?= $name ?? '' ?>>
+            <input type="text" class="form-control" name="name" id="name" value="<?= $name ?? ''; ?>">
           </div>
           <div class="mb-3 col-6">
             <label for="school_num" class="form-label">學號</label>
-            <input type="text" class="form-control" name="school_num" id="school_num">
+            <input type="text" class="form-control" name="school_num" id="school_num" value="<?= $school_num ?? ''; ?>">
           </div>
           <div class="mb-3 col-6">
             <label for="birthday" class="form-label">生日</label>
@@ -46,29 +49,28 @@
             <label for="dept" class="form-label">科系</label>
             <input type="text" class="form-control" name="dept" id="dept" value="<?= $dept ?? ''; ?>">
           </div>
-          <div class="mb-3 col-6">
-            <label for="graduate_at" class="form-label">畢業學校</label>
-            <select id="schools" class="form-select" name="graduate_at">
-              <option selected>請選擇學校</option>
+          <div class='mb-3 col-6'>
+            <label for="schools" class="form-label">畢業學校</label>
+            <select id="schools" name="graduate_at" class="form-select" aria-label="Default select">
+
             </select>
           </div>
           <div class="mb-3 col-6">
             <label for="status_code" class="form-label">畢業狀態</label>
-            <input type="text" class="form-control" name="status_code" id="status_code" value="<?=$status_code??'';?>">
+            <input type="text" class="form-control" name="status_code" id="status_code" value="<?= $status_code ?? ''; ?>">
           </div>
           <?php
           if (isset($_GET['id'])) {
-            echo "<input type='hidden' name = 'id' value = '{$_user['id']}'>";
+            echo "<input type='hidden' name='id' value='{$user['id']}'>";
           }
-
           ?>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-            <button type="submit" class="btn btn-primary"><?= (isset($_GET['id'])) ? '編輯更新' : '確認新增' ?>確認新增</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary">
+            <?= (isset($_GET['id'])) ? '編輯更新' : '確認新增'; ?>
+          </button>
 
-          </div>
         </form>
       </div>
-    </div>
-  </div>
-</div>
+      <div class="modal-footer">
+
+      </div>
